@@ -13,6 +13,9 @@ B_overall_long = [0;0;0;0;a];
 C_overall_long = eye(5);
 D_overall_long = 0;
 system_long = ss(A_overall_long,B_overall_long,C_overall_long,D_overall_long);
+set(system_long,'StateName',["V_t" "alpha" "theta" "q" "detla_el"]);
+set(system_long, 'InputName',["u_el"]);
+set(system_long, 'OutputName', ["V_t" "alpha" "theta" "q" "detla_el"]);
 save system_long.mat system_long
 
 %% LATERAL
@@ -37,6 +40,9 @@ C_overall_lat = eye(6);
 D_overall_lat = zeros(6,2);
 
 system_lat = ss(A_overall_lat,B_overall_lat,C_overall_lat,D_overall_lat);
+set(system_lat,'StateName',["beta" "phi" "p" "r" "detla_a" "delta_r"]);
+set(system_lat, 'InputName',["u_a" "u_r"]);
+set(system_lat, 'OutputName', ["beta" "phi" "p" "r" "detla_a" "delta_r"]);
 save system_lat.mat system_lat
 
 
