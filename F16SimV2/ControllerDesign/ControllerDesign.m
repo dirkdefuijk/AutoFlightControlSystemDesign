@@ -35,8 +35,12 @@ poles_desired = pole(H_el_to_q_desired);
 % Place poles at desired locations
 K = place(system_sp.A, system_sp.B, poles_desired); % [K_alpha K_q]
 
+% close loop
+sys_closed = feedback(system_sp, K);
+
 %% GUSTS
 
 d_alpha = atan(4.572/V); %rad
 d_elev = d_alpha * K(1); % /pi*180 // comment on whether this is acceptable
 
+%% Designing for T_theta_2
