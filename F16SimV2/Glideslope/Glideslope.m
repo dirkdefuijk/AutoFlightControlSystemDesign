@@ -15,7 +15,7 @@ sys_reduced = ss(A_reduced, B_reduced, eye(5), zeros(5,2));
 
 set(sys_reduced,'StateName',["h" "V_t" "alpha" "theta" "q"]);
 set(sys_reduced, 'InputName',["delta_thr" "delta_el"]);
-set(sys_reduced, 'OutputName', ["h" "V_t" "alpha" "theta" "q"]);
+set(sys_reduced, 'OutputName',["h" "V_t" "alpha" "theta" "q"]);
 save sys_reduced_glideslope.mat sys_reduced
 
 
