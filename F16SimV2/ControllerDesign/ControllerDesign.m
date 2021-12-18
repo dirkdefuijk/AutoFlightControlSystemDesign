@@ -41,6 +41,7 @@ sys_closed = feedback(system_sp,K);
 %% GUSTS
 
 d_alpha = atan(4.572/V); %rad
+% K(1) is in deg/rad --> K(1)[rad/rad] = K(1)/180*pi
 d_elev = d_alpha * K(1); % /pi*180 // comment on whether this is acceptable
 
 %% Designing for T_theta_2

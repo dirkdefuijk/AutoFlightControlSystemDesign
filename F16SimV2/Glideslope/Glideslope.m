@@ -18,5 +18,26 @@ set(sys_reduced, 'InputName',["delta_thr" "delta_el"]);
 set(sys_reduced, 'OutputName',["h" "V_t" "alpha" "theta" "q"]);
 save sys_reduced_glideslope.mat sys_reduced
 
+%% Saturation Limits
+min_dev_thrust = 1000 - trim_thrust_lo;
+max_dev_thrust = 19000 - trim_thrust_lo;
+
+min_dev_elevator = -25 - trim_control_lo(1);
+max_dev_elevator = 25 - trim_control_lo(1); 
+
+%% Glideslope Controller
+K_c = 1;
+W_1 = 0.1;
+V_0 = 300; %ft/s
+P_0 = V_0*10; %ft (can we assme this?)
+
+%% Stabilize system
+s = tf('s');
+H_elev = 20.2/(s+20.2);
+K_q = -100;
+
+
+
+
 
 
