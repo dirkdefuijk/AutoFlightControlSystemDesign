@@ -37,7 +37,14 @@ H_elev = 20.2/(s+20.2);
 K_q = -100;
 
 
+%% Calculate starting state
+t0 = 10;
+h0 = 2000;
+d0 = V_0*t0;
+alpha0 = 0.1824;
+theta0 = 0.1824;
 
-
-
-
+%% MATLAB IT
+alpha_del = minreal(tf(sys_reduced(3,2)));
+theta_del = minreal(tf(sys_reduced(4,2)));
+gamma_del = minreal(1-alpha_del/theta_del);
