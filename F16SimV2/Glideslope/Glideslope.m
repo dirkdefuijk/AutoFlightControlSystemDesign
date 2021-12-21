@@ -29,22 +29,22 @@ max_dev_elevator = 25 - trim_control_lo(1);
 K_c = 1;
 W_1 = 0.1;
 V_0 = 300; %ft/s
-P_0 = V_0*10; %ft (can we assme this?)
+P_0 = V_0*10; %ft (can we assume this?)
 
 %% Stabilize system
 s = tf('s');
 H_elev = 20.2/(s+20.2);
 K_q = -100;
 
-
-%% Calculate starting state
+%% Trim/starting state
 t0 = 10;
 h0 = 2000;
 d0 = V_0*t0;
 alpha0 = 0.1824;
 theta0 = 0.1824;
 
-%% MATLAB IT
-alpha_del = minreal(tf(sys_reduced(3,2)));
-theta_del = minreal(tf(sys_reduced(4,2)));
-gamma_del = minreal(1-alpha_del/theta_del);
+%% Linearized slant range
+x0 = 2000/(3/180*pi) + 300*10;
+y0 = 2000;
+coeff_x = x0/sqrt(x0^2+y0^2);
+coeff_y = y0/sqrt(x0^2+y0^2);
