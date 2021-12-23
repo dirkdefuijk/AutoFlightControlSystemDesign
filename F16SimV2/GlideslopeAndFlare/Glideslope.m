@@ -26,3 +26,17 @@ min_dev_elevator = -25 - trim_control_lo(1);
 max_dev_elevator = 25 - trim_control_lo(1); 
 
 
+%% Initial Values
+
+x0 = 3000 + 2000/(3*pi/180);
+y0 = 2000;
+coeff_x=x0/sqrt(x0^2+y0^2);
+coeff_y=y0/sqrt(x0^2+y0^2);
+alpha0 = trim_state_lo(8);
+theta0 = trim_state_lo(5);
+
+
+
+
+
+
