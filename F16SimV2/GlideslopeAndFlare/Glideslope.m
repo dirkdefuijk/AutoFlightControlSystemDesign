@@ -35,8 +35,14 @@ coeff_y=y0/sqrt(x0^2+y0^2);
 alpha0 = trim_state_lo(8);
 theta0 = trim_state_lo(5);
 
+%% Flare
 
-
+h_dot_h_flare = 300*sin(-3/180*pi);
+x_flare_1 = 1100;
+tau = 1.2217;
+x_flare_2 = 299.5891*tau;
+% control law: h_dot = -h/tau = -0.8185*h
+h_flare = 19.1817;
 
 
 
