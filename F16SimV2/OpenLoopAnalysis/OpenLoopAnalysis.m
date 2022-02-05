@@ -43,11 +43,11 @@ B_overall_lat = [0 0;0 0;0 0;0 0;a 0; 0 b];
 C_overall_lat = eye(6);
 D_overall_lat = zeros(6,2);
 
-system_lat = ss(A_overall_lat,B_overall_lat,C_overall_lat,D_overall_lat);
-set(system_lat,'StateName',["beta" "phi" "p" "r" "detla_a" "delta_r"]);
-set(system_lat, 'InputName',["u_a" "u_r"]);
-set(system_lat, 'OutputName', ["beta" "phi" "p" "r" "detla_a" "delta_r"]);
-save system_lat.mat system_lat
+system_reduced_lat = ss(A_ac_lat,B_ac_lat,eye(4),zeros(4,2));
+set(system_reduced_lat,'StateName',["beta" "phi" "p" "r"]);
+set(system_reduced_lat, 'InputName',["delta_a" "delta_r"]);
+set(system_reduced_lat, 'OutputName', ["beta" "phi" "p" "r"]);
+save system_reduced_lat.mat system_reduced_lat
 
 %% Test
 s = tf('s');
@@ -59,6 +59,49 @@ H_ail = a/(s+a);
 H_rud = a/(s+a);
 sys_ac_lat = ss(A_ac_lat,B_ac_lat,eye(4),zeros(4,2));
 H_OL_lat = H_ail*sys_ac_lat;
+
+%% Daming ratio, natural frequency and time to half amplitude
+% LONGITUDINAL
+[wn_long,zeta_long,p_long] = damp(system_reduced_long);
+period_sp = 1/(wn_long(3)/2/pi);
+period_phugoid = 1/(wn_long(1)/2/pi);
+
+T_half_sp = -log(1/2)/zeta_long(3)/wn_long(3);
+T_half_phugoid = -log(1/2)/zeta_long(1)/wn_long(1);
+
+% LATERAL
+[wn_lat,zeta_lat,p_lat] = damp(system_reduced_lat);
+period_dutchroll = 1/(wn_lat(3)/2/pi);
+
+T_half_dutchroll = -log(1/2)/zeta_lat(3)/wn_lat(3);
+
+
+%% Plot time responses
+
+% short period
+figure
+
+t_sp = 0:0.001:15;
+initial(system_reduced_long(2),[0,0.01,0,0],t_sp);
+xline(T_half_sp)
+grid on
+ylabel("alpha [rad]")
+% phugoid
+figure
+t_phugoid = 0:0.001:200;
+initial(system_reduced_long(1),[0,0,0.1,0],t_phugoid);
+xline(T_half_phugoid);
+grid on
+ylabel("V [ft/s]")
+% dutch roll
+figure
+t_dr = 0:0.001:50;
+initial(system_reduced_lat(1,1),[0.1,0,0,0],t_dr);
+xline(T_half_dutchroll);
+grid on
+ylabel("beta [rad]")
+
+
 
 
 
