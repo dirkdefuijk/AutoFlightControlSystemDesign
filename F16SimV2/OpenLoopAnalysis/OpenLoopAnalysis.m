@@ -13,9 +13,7 @@ B_overall_long = [0;0;0;0;a];
 C_overall_long = eye(5);
 D_overall_long = 0;
 
-
-
-%% SAVE MODEL W/O ACTUATOR DYNAMICS
+% SAVE LONG MODEL W/O ACTUATOR DYNAMICS
 system_reduced_long = ss(A_ac_long,B_ac_long,eye(4),zeros(4,1));
 set(system_reduced_long,'StateName',["V_t" "alpha" "theta" "q"]);
 set(system_reduced_long, 'InputName',["u_el"]);
@@ -43,6 +41,7 @@ B_overall_lat = [0 0;0 0;0 0;0 0;a 0; 0 b];
 C_overall_lat = eye(6);
 D_overall_lat = zeros(6,2);
 
+% SAVE LAT MODEL W/O ACTUATOR DYNAMICS
 system_reduced_lat = ss(A_ac_lat,B_ac_lat,eye(4),zeros(4,2));
 set(system_reduced_lat,'StateName',["beta" "phi" "p" "r"]);
 set(system_reduced_lat, 'InputName',["delta_a" "delta_r"]);
