@@ -14,12 +14,11 @@ C_overall_long = eye(5);
 D_overall_long = 0;
 
 
-
-%% SAVE MODEL W/O ACTUATOR DYNAMICS
+% SAVE LONG MODEL W/O ACTUATOR DYNAMICS
 system_reduced_long = ss(A_ac_long,B_ac_long,eye(4),zeros(4,1));
 set(system_reduced_long,'StateName',["V_t" "alpha" "theta" "q"]);
-set(system_reduced_long, 'InputName',["u_el"]);
-set(system_reduced_long, 'OutputName', ["V_t" "alpha" "theta" "q"]);
+set(system_reduced_long,'InputName',["delta_e"]);
+set(system_reduced_long,'OutputName',["V_t" "alpha" "theta" "q"]);
 save system_reduced_long_inbetweenFC.mat system_reduced_long
 
 %% LATERAL
@@ -35,7 +34,6 @@ B_ac_lat = [SS_lat_lo.A(4,8:9);SS_lat_lo.A(1,8:9);SS_lat_lo.A(5,8:9);SS_lat_lo.A
 a = 20.2;
 b = 20.2;
 
-% d/dt(d_ail) = -a*d_ail + u_ail
 A_overall_lat = [A_ac_lat B_ac_lat;
     0 0 0 0 -a 0; 
     0 0 0 0 0 -b];
@@ -43,22 +41,12 @@ B_overall_lat = [0 0;0 0;0 0;0 0;a 0; 0 b];
 C_overall_lat = eye(6);
 D_overall_lat = zeros(6,2);
 
-system_lat = ss(A_overall_lat,B_overall_lat,C_overall_lat,D_overall_lat);
-set(system_lat,'StateName',["beta" "phi" "p" "r" "detla_a" "delta_r"]);
-set(system_lat, 'InputName',["u_a" "u_r"]);
-set(system_lat, 'OutputName', ["beta" "phi" "p" "r" "detla_a" "delta_r"]);
-save system_lat.mat system_lat
-
-%% Test
-s = tf('s');
-H_elev = a/(s+a);
-sys_ac_long = ss(A_ac_long,B_ac_long,eye(4),0);
-H_OL_long = H_elev*sys_ac_long;
-
-H_ail = a/(s+a);
-H_rud = a/(s+a);
-sys_ac_lat = ss(A_ac_lat,B_ac_lat,eye(4),zeros(4,2));
-H_OL_lat = H_ail*sys_ac_lat;
+% SAVE LAT MODEL W/O ACTUATOR DYNAMICS
+system_reduced_lat = ss(A_ac_lat,B_ac_lat,eye(4),zeros(4,2));
+set(system_reduced_lat,'StateName',["beta" "phi" "p" "r"]);
+set(system_reduced_lat, 'InputName',["delta_a" "delta_r"]);
+set(system_reduced_lat, 'OutputName', ["beta" "phi" "p" "r"]);
+save system_reduced_lat_inbetweenFC.mat system_reduced_lat
 
 
 

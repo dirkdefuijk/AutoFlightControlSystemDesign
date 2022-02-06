@@ -16,7 +16,7 @@ D_overall_long = 0;
 % SAVE LONG MODEL W/O ACTUATOR DYNAMICS
 system_reduced_long = ss(A_ac_long,B_ac_long,eye(4),zeros(4,1));
 set(system_reduced_long,'StateName',["V_t" "alpha" "theta" "q"]);
-set(system_reduced_long, 'InputName',["u_el"]);
+set(system_reduced_long, 'InputName',["delta_e"]);
 set(system_reduced_long, 'OutputName', ["V_t" "alpha" "theta" "q"]);
 save system_reduced_long.mat system_reduced_long
 
